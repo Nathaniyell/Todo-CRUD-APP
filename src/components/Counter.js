@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import { Button } fom 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 //Counter App using useReducer to manage the states
 
