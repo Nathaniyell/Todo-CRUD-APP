@@ -4,10 +4,10 @@ import { Button } from 'react-bootstrap';
 //Counter App using useReducer to manage the states
 
 const Counter = () => {
-	const [state, dispatch] = useReducer(reducer, initialState)
 	const initialState = {
 		count: 0
 	}
+	const [state, dispatch] = useReducer(reducer, initialState)
 
 	function reducer(state, action) {
 		switch (action.type) {
