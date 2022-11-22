@@ -3,36 +3,57 @@ import { TodosContext } from '../App';
 import { Table, Form, Button, Row, Col } from 'react-bootstrap';
 
 function ToDoList() {
-    const [todoText, setTodoText] = useState('')
-    function handleSubmit(event) {
-        event.preventDefault()
-        dispatch({type: 'add', payload: todoText})
-        setTodoText('')
+    // receive state and dispatch from app.js
+    const { state, dispatch } = useContext(TodosContext);
+    const [todoText, setTodoText] = useState("")
+    const [editMode, setEditMode] = useState(false)
+    const [editTodo, setEditTodo] = useState(null)
+    const buttonTitle = editMode ? "Edit" : "Add";
+    const handleSubmit = event => {
+        event.preventDefault();
+        if (todoText === '') {
+            return
+        }
+        if (editMode) {
+            dispatch({ type: 'edit', payload: { ...editTodo, text: todoText } })
+            setEditMode(false)
+            setEditTodo(null)
+        }
+        else {
+            dispatch({ type: 'add', payload: todoText })
+        }
+        /* 
+        Do a conditional check if editMode is true, dispatch the ‘edit’ action
+    with a changed todo payload payload:{...editTodo,text:todoText} to reflect the edited
+    todo text. After the dispatch, we set editMode back to false and editTodo to
+    null.
+        */
+        setTodoText("")
     }
 
-    // receive state and dispatch from index.js
-    const { state, dispatch } = useContext(TodosContext);
     return (
         <div>
-            <Form onSubmit={handleSubmit} className="my-3">
+            <Form onSubmit={handleSubmit} className="p-1">
                 <Row>
                     <Form.Group controlId="formBasicEmail">
-                        <Col xs={5}>
+                        <Col>
                             <Form.Control
-                                xs={7}
+                                xs='7'
                                 type="text"
                                 placeholder="Enter To Do"
                                 onChange={event => setTodoText(event.target.value)}
                                 value={todoText} />
                         </Col>
-                    <Button variant="primary" type="submit" className="my-3">
-                        Add Todo
-                    </Button>
                     </Form.Group>
+                    <Col className='my-3 text-center'>
+                        <Button variant="outline-dark" type="submit" className="">
+                            {buttonTitle}
+                        </Button>
+                    </Col>
 
                 </Row>
             </Form>
-            <Table striped bordered hover>
+            <Table striped bordered hover responsive size='lg'>
                 <thead>
                     <tr>
                         <th>To Do</th>
@@ -44,7 +65,11 @@ function ToDoList() {
                     {state.todos.map(todo => (
                         <tr key={todo.id}>
                             <td>{todo.text}</td>
-                            <td>Edit</td>
+                            <td onClick={() => {
+                                setTodoText(todo.text)
+                                setEditTodo(todo)
+                                setEditMode(true)
+                            }}>Edit</td>
                             <td onClick={() => dispatch({ type: 'delete', payload: todo })}>Delete</td>
                         </tr>
                     ))}

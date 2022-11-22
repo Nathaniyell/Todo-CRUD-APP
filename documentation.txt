@@ -19,3 +19,41 @@ The payload from the formSubmit is assigned to the text property of the new obje
 Next we create a newArray(addedToDos), spread the existing todos before proceeding to add the newTodo to this newArray(addedToDos)
 
 Next we return a new state by spreading the existing state and then assigning newArray(addedToDos) to the existing todos
+
+//Edit todo
+Two new states are created; editMode, which becomes true if the user decides to edit the todo, editTodo, which holds a specific todo object to be edited.
+An onClick handler is added to the edit button and several states are updated as shown in the todolist.js
+
+On App.js  ‘edit’ action type is added as a case in the todosReducer function.
+Add
+in the following code for ‘edit’:
+function todosReducer(state, action){
+switch(action.type){
+case 'edit':
+const updatedToDo = {...action.payload}
+const updatedToDoIndex = state.todos.findIndex(t => t.id === action.payload.id)
+const updatedToDos = [
+...state.todos.slice(0,updatedToDoIndex),
+updatedToDo,
+...state.todos.slice(updatedToDoIndex + 1)
+];
+return {...state, todos: updatedToDos}
+}
+Next, the payload is assigned to updatedToDo . Now, because there is no
+straightforward function to find an element and then change its content, we
+have to actually ‘slice’ up the array to get the items before and after the
+selected element, and in between, insert the updatedToDo .
+We first get the index of the selected element with:
+
+const updatedToDoIndex = state.todos.findIndex(t => t.id ===
+action.payload.id)
+
+And to get the items before the selected element, we use state.todos.slice(0,updatedToDoIndex), 
+
+To get the items after the selected element, we use state.todos.slice(updatedToDoIndex + 1)
+
+And to create a new array with the changed todo in between, we have:
+const updatedToDos = [
+...state.todos.slice(0,updatedToDoIndex),
+updatedToDo,
+...state.todos.slice(updatedToDoIndex + 1)
