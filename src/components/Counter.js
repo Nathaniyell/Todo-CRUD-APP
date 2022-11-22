@@ -23,10 +23,12 @@ const Counter = () => {
 	}
 
 	return (
-		<div><h1>Count : {state} </h1> <br />
+		<div>
+			<h1>Count : {state.count} </h1> <br />
 			<Button variant='danger' onClick={() => dispatch({ type: 'decrement' })}>Decrement</Button> <br />
 			<Button variant='primary' onClick={() => dispatch({ type: 'reset' })}>Reset</Button> <br />
-			<Button variant='success' onClick={() => dispatch({ type: 'increment' })}>Increment</Button></div>
+			<Button variant='success' onClick={() => dispatch({ type: 'increment' })}>Increment</Button>
+		</div>
 	)
 }
 

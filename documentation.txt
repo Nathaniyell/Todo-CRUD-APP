@@ -1,0 +1,12 @@
+An onClick handler was added to the edit and delete tags to allow for updating and deleting the todos
+
+The onClick uses dispatch to fire the delete action. Also a
+payload argument is provided which refers to any data needed for the reducer to perform
+a given action (in this case, ‘delete’).
+
+Next we add the 'delete' case to our reducer in app.js to handle the action
+
+On  App, state.todos.filter checks for each element and filters for only todos whose id
+is not equal to the todo’s id in the payload (the todo to be deleted). Note that
+filter returns a whole new array for us. It does not change the existing array
+and then return it.
