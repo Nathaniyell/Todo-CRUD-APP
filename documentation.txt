@@ -10,3 +10,12 @@ On  App, state.todos.filter checks for each element and filters for only todos w
 is not equal to the todo’s id in the payload (the todo to be deleted). Note that
 filter returns a whole new array for us. It does not change the existing array
 and then return it.
+
+The data from the input field is bound to the todoText state and once the submit button is clicked, a dispatch action is ran, sending the recieved input to the reducer function in App.js.
+Next, we add the 'add' case to our reducer function in app.js, a new todo object is created with the name newToDo .
+Random numbers are generated and assigned to the object as the id.
+The payload from the formSubmit is assigned to the text property of the new object (newTodo) created
+
+Next we create a newArray(addedToDos), spread the existing todos before proceeding to add the newTodo to this newArray(addedToDos)
+
+Next we return a new state by spreading the existing state and then assigning newArray(addedToDos) to the existing todos

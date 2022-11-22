@@ -12,6 +12,14 @@ const todosInitialState = {
 
 function todosReducer(state, action) {
   switch (action.type) {
+    case 'add':
+      const newToDo = { id: Math.random().toLocaleString, text: action.payload }
+      // add new todo onto array
+      const addedToDos = [...state.todos, newToDo]
+
+      // spread our state and assign todos
+      return { ...state, todos: addedToDos }
+      
     case 'delete':
       const filteredTodoState = state.todos.filter(todo => todo.id !== action.payload.id)
       return { ...state, todos: filteredTodoState }
